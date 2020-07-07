@@ -3,11 +3,11 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-class conexionWeb{
+class conexionWb{
   private:
 
   public:
-    conexionWeb(const char *_SSID, const char* _PASSWORD ){
+    conexionWb(const char *_SSID, const char* _PASSWORD ){
       WiFi.begin(_SSID, _PASSWORD);
       while(WiFi.status()!= WL_CONNECTED){
           delay(500);
@@ -49,29 +49,29 @@ public:
     strftime(timeStringBuff, sizeof(timeStringBuff), "%Y-%m-%dT%H:%M:%SZ", &timeinfo);
   }
 };
-conexionWeb *webInterface;
+conexionWb *webInterface;
 DateTime *reloj;
-StaticJsonDocument<512> horaActual;
+StaticJsonDocument<512> hActual;
 
 
-const char *ssid="Ubee16F8-2.4G";
-const char *passwrd="5F99F616F8";
+const char *ssid="IZZI-5D2F";
+const char *passwrd="509551245D2F";
 
 
 void setup() {
   Serial.begin(115200);
-  webInterface= new conexionWeb(ssid,passwrd);
+  webInterface= new conexionWb(ssid,passwrd);
   reloj=new DateTime();
   
 }
 int suma=0;
 void loop() {
   suma++;
-  horaActual.clear();
+  hActual.clear();
   reloj->getTime();
-  horaActual["hora"]=reloj->timeStringBuff;
-  horaActual["Sumatoria"]=suma;
-  serializeJson(horaActual,Serial);
+  hActual["Hora"]=reloj->timeStringBuff;
+  hActual["Sumatoria"]=suma;
+  serializeJson(hActual,Serial);
   Serial.println("");
   delay(1000);
 }
